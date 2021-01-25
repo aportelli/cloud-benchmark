@@ -21,7 +21,6 @@ wget https://bintray.com/ookla/download/download_file\?file_path\=ookla-speedtes
 cd bin
 tar -xf ../ookla-speedtest-1.0.0-x86_64-linux.tgz
 ./speedtest --accept-license --accept-gdpr &> /dev/null
-mv speedtest bin/
 rm -f speedtest.5 speedtest.md ../ookla-speedtest-1.0.0-x86_64-linux.tgz
 cd ..
 echo '-- installing Storj uplink'
