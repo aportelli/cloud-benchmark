@@ -1,4 +1,9 @@
 *.log
-bin
-download
-ensemble
+*.csv
+/bin
+/download
+/ensemble
+/ensemble-chunked
+/archive
+/tardigrade
+.vscode
