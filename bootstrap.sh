@@ -16,4 +16,17 @@ make -j ${CPUS}
 mv xxh*sum ../bin/
 cd ..
 rm -rf xxHash-0.8.0 v0.8.0.tar.gz
-
+echo '-- installing Speedtest CLI'
+wget https://bintray.com/ookla/download/download_file\?file_path\=ookla-speedtest-1.0.0-x86_64-linux.tgz -O ookla-speedtest-1.0.0-x86_64-linux.tgz
+cd bin
+tar -xf ../ookla-speedtest-1.0.0-x86_64-linux.tgz
+./speedtest --accept-license --accept-gdpr &> /dev/null
+mv speedtest bin/
+rm -f speedtest.5 speedtest.md ../ookla-speedtest-1.0.0-x86_64-linux.tgz
+cd ..
+echo '-- installing Storj uplink'
+curl -L https://github.com/storj/storj/releases/latest/download/uplink_linux_amd64.zip -o uplink_linux_amd64.zip
+unzip -o uplink_linux_amd64.zip
+chmod 755 uplink
+mv uplink bin/
+rm -f uplink_linux_amd64.zip
