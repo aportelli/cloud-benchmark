@@ -7,7 +7,7 @@ if (( $# != 2 )); then
 fi
 REMOTE="$1"
 SIZE=$2
-CPUS=$(nproc || echo 4)
+CPUS=$(nproc --all || echo 4)
 PATH="$(pwd -P)/bin:${PATH}"
 
 echo "-- uploading data to cloud (rclone remote ${REMOTE})"

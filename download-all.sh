@@ -6,7 +6,7 @@ if (( $# != 1 )); then
     exit 1
 fi
 REMOTE="$1"
-CPUS=$(nproc || echo 4)
+CPUS=$(nproc --all || echo 4)
 PATH="$(pwd -P)/bin:${PATH}"
 
 echo "-- downloading data from cloud (rclone remote ${REMOTE})"

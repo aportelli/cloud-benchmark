@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CPUS=$(nproc || echo 4)
+CPUS=$(nproc --all || echo 4)
 
 mkdir bin
 echo '-- installing rclone'
