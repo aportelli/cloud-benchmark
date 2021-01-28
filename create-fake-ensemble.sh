@@ -20,7 +20,6 @@ for traj in $(seq 1800 20 2000); do
   dd if=<(openssl enc -aes-256-ctr -pass pass:"${PASS}" -nosalt </dev/zero 2>/dev/null) \
      of="${FILENAME}" bs=1M count=${SIZEMB} iflag=fullblock
   echo "-- computing XXH128"
-  ./xxh128sum ${FILENAME} > ${FILENAME}.xxh128
+  xxh128sum ${FILENAME} > ${FILENAME}.xxh128
   cat ${FILENAME}.xxh128
 done
-
