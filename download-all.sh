@@ -10,7 +10,7 @@ CPUS=$(nproc --all || echo 4)
 PATH="$(pwd -P)/bin:${PATH}"
 
 echo "-- downloading data from cloud (rclone remote ${REMOTE})"
-ulimit -n 10240 && rclone copy -vv --stats 1000ms --stats-one-line --transfers ${CPUS} "${REMOTE}":lattice-cloud-benchmark/ensemble download/ensemble
+rclone copy -vv --stats 1000ms --stats-one-line --transfers ${CPUS} "${REMOTE}":lattice-cloud-benchmark/ensemble download/ensemble
 echo '-- verifying checksums'
 cd download
 TMP=$(mktemp)

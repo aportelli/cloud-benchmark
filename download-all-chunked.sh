@@ -11,7 +11,7 @@ CPUS=$(nproc --all || echo 4)
 PATH="$(pwd -P)/bin:${PATH}"
 
 echo "-- downloading data from cloud (rclone remote ${REMOTE})"
-ulimit -n 10240 && rclone copy -vv --stats 1000ms --stats-one-line --transfers ${CPUS} "${REMOTE}":lattice-cloud-benchmark/ensemble-chunked/${SIZE} download/ensemble-chunked/${SIZE}
+rclone copy -vv --stats 1000ms --stats-one-line --transfers ${CPUS} "${REMOTE}":lattice-cloud-benchmark/ensemble-chunked/${SIZE} download/ensemble-chunked/${SIZE}
 echo '-- recontructing files'
 cd download
 for f in $(find ensemble-chunked/${SIZE} -name '*.xxh128'); do
