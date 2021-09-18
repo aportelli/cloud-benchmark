@@ -1,16 +1,17 @@
 #!/bin/env bash
 set -euo pipefail
 
-if (( $# != 1 )); then
-    echo "usage: `basename $0` <chunk size>" 1>&2
+if (( $# != 2 )); then
+    echo "usage: `basename $0` <name> <chunk size>" 1>&2
     exit 1
 fi
-SIZE=$1
+NAME=$1
+SIZE=$2
 
 INITDIR=$(pwd)
-for f in $(find ensemble -name 'ckpoint_lat.*' | grep -v xxh128); do
+for f in $(find data/${NAME} -name 'rand.*' | grep -v xxh128); do
   echo "-- chunking ${f}"
-  CDIR=$(dirname ${f} | sed "s/ensemble/ensemble-chunked\/${SIZE}/g")
+  CDIR=$(dirname ${f} | sed "s/data/data\/chunked\/${SIZE}/g")
   mkdir -p ${CDIR}
   cd ${CDIR}
   cp ${INITDIR}/${f}.xxh128 .

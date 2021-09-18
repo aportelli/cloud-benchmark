@@ -2,8 +2,7 @@
 *.csv
 /bin
 /download
-/ensemble
-/ensemble-chunked
+/data
 /archive
-/tardigrade
 .vscode
+*.code-workspace

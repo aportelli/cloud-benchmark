@@ -11,7 +11,7 @@ SIZE=$3
 PATH="$(pwd -P)/bin:${PATH}"
 
 mkdir -p ${DIR}
-./baseline.sh |& tee ${DIR}/baseline.log
-mv baseline.csv ${DIR}/
+#./baseline.sh |& tee ${DIR}/baseline.log
+#mv baseline.csv ${DIR}/
 ./download-all-chunked.sh ${REMOTE} ${SIZE} |& tee ${DIR}/download-chunked-${SIZE}.log
 ./download-all.sh ${REMOTE} |& tee ${DIR}/download.log

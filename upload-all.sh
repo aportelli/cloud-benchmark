@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if (( $# != 1 )); then
-    echo "usage: `basename $0` <rclone remote name>" 1>&2
+if (( $# < 2 )); then
+    echo "usage: `basename $0` <rclone remote name> <dataset name> [<rclone options>]" 1>&2
     exit 1
 fi
 REMOTE="$1"
-CPUS=$(nproc --all || echo 4)
+NAME="$2"
+RCLONE_EXTRA="${@:3}"
 PATH="$(pwd -P)/bin:${PATH}"
 
 echo "-- uploading data to cloud (rclone remote ${REMOTE})"
-rclone mkdir "${REMOTE}":lattice-cloud-benchmark
-rclone -vv --stats 1000ms --stats-one-line --transfers ${CPUS} copy ensemble "${REMOTE}":lattice-cloud-benchmark/ensemble
-
+echo "rclone extra args: ${RCLONE_EXTRA}"
+rclone mkdir ${REMOTE}:cloud-benchmark
+ulimit -n 10240 && rclone -vv --stats 1000ms --stats-one-line ${RCLONE_EXTRA} copy data/${NAME} ${REMOTE}:cloud-benchmark/data/${NAME}

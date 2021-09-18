@@ -1,27 +1,28 @@
 #!/bin/env bash
 set -euo pipefail
 
-if (( $# != 2 )); then
-    echo "usage: `basename $0` <rclone remote name> <chunk size>" 1>&2
+if (( $# < 3 )); then
+    echo "usage: `basename $0` <rclone remote name> <dataset name> <chunk size> [<rclone options>]" 1>&2
     exit 1
 fi
 REMOTE="$1"
-SIZE=$2
-CPUS=$(nproc --all || echo 4)
+NAME="$2"
+SIZE="$3"
+RCLONE_EXTRA="${@:4}"
 PATH="$(pwd -P)/bin:${PATH}"
 
 echo "-- downloading data from cloud (rclone remote ${REMOTE})"
-rclone copy -vv --stats 1000ms --stats-one-line --transfers ${CPUS} "${REMOTE}":lattice-cloud-benchmark/ensemble-chunked/${SIZE} download/ensemble-chunked/${SIZE}
+rclone copy -vv --stats 1000ms --stats-one-line ${RCLONE_EXTRA} "${REMOTE}":cloud-benchmark/data/chunked/${SIZE}/${NAME} download/data/chunked/${SIZE}/${NAME}
 echo '-- recontructing files'
 cd download
-for f in $(find ensemble-chunked/${SIZE} -name '*.xxh128'); do
+for f in $(find data/chunked/${SIZE}/${NAME} -name '*.xxh128'); do
   STEM=${f//.xxh128}
   echo ${STEM}
-  cat $(find ensemble-chunked/${SIZE} -name "$(basename ${STEM}).*" | grep -v xxh | sort) > ${STEM}
+  cat $(find data/chunked/${SIZE}/${NAME} -name "$(basename ${STEM}).*" | grep -v xxh | sort) > ${STEM}
 done
 echo '-- verifying checksums'
 TMP=$(mktemp)
-cat $(find ensemble-chunked/${SIZE} -name '*.xxh128') | sed "s/ensemble/ensemble-chunked\/${SIZE}/g" > ${TMP}
+cat $(find data/chunked/${SIZE}/${NAME} -name '*.xxh128') | sed "s/data/data\/chunked\/${SIZE}/g" > ${TMP}
 xxh128sum -c ${TMP}
 rm -f ${TMP}
 cd ..

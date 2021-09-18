@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 CPUS=$(nproc --all || echo 4)
+RCLONE_VERSION='1.55.1'
 
 mkdir bin
 echo '-- installing rclone'
-wget https://downloads.rclone.org/v1.53.1/rclone-v1.53.1-linux-amd64.zip
-unzip rclone-v1.53.1-linux-amd64.zip
-mv rclone-v1.53.1-linux-amd64/rclone bin/
-rm -rf rclone-v1.53.1-linux-amd64.zip rclone-v1.53.1-linux-amd64
+wget https://downloads.rclone.org/v${RCLONE_VERSION}/rclone-v${RCLONE_VERSION}-linux-amd64.zip
+unzip rclone-v${RCLONE_VERSION}-linux-amd64.zip
+mv rclone-v${RCLONE_VERSION}-linux-amd64/rclone bin/
+rm -rf rclone-v${RCLONE_VERSION}-linux-amd64.zip rclone-v${RCLONE_VERSION}-linux-amd64
 echo '-- installing xxHash'
 wget https://github.com/Cyan4973/xxHash/archive/v0.8.0.tar.gz
 tar -xf v0.8.0.tar.gz
